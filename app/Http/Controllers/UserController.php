@@ -190,7 +190,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user=User::find($id);
+        $user=User::findOrFail($id);
        
         if($user->user_image !='noimage.jpg'){
             // Delete image

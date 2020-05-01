@@ -3,40 +3,57 @@
 @section('content')
 <div class="container ">
 @if (Auth::user()->user_type=='staff')
-<div class="d-flex">
-    <div class="col-md-3">
-        <img src="/storage/user_images/{{Auth::user()->user_image}}" style="width:200px;height:200px;float:left;border-radius:50%;margin-right:25px;">
-    </div>
-
-    <div class="col-md-9 well" style="text-align:left;padding-right:50px;font-size:18px">
-
-        <div class="col-md-6">
-            <p><b>Name: </b>{{Auth::user()->name}}</p>
-            <p><b>Email: </b>{{Auth::user()->email}}</p>
-            <p><b>Staff ID: </b>{{Auth::user()->Adm_No}}</p>
-            <p><b>Class: </b>{{Auth::user()->staffprofile->class}}</p>
-        </div>
-        <div class="col-md-6">
-            <a href="/staffprofile/{{Auth::user()->Adm_No}}/edit" class="btn btn-default" style="float:right">Edit Profile</a>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card" >
+            <img src="/storage/user_images/{{Auth::user()->user_image}}" alt="{{Auth::user()->name}}" style="max-width:100%;height:300px">
+            <h1>{{Auth::user()->name}}</h1>
+            <p class="titlecard">{{Auth::user()->user_type}}</p>
+            <p>{{Auth::user()->email}}</p>
+            <p><a href="/staffprofile/{{Auth::user()->Adm_No}}/edit"><button class="btncard">Edit Profile</button></a></p>
+          </div>    
         </div>
 
+    <div class="col-md-8" style="text-align:left;padding-right:50px;font-size:18px">
+
+        <div class="panel panel-default">
+            <div class="panel-heading" style="text-align:center"><b>Details</b></div>
+            <div class="panel-body">
+        <p><b>Phone Number: </b>{{Auth::user()->staffprofile->phone_number ?? ''}}</p>
+        <p><b>Class: </b>{{Auth::user()->staffprofile->class ?? ''}}</p>
+        <p><b>Subjects: </b>{{Auth::user()->staffprofile->subjects ?? ''}}</p>
+        <p><b>Skills: </b>{{Auth::user()->staffprofile->skills ?? ''}}</p>
+        <p><b>Date of Birth: </b>{{Auth::user()->staffprofile->DoB ?? ''}}</p>
+            </div>
+        </div>
+        
     </div>
 </div>
-<form action="/search-student" method="GET">
-    <h3 style="text-align:center">Student List</h3>
 
-    <div class="input-group d-flex">
-        <a href="/classroom/create" class="btn btn-primary" style="margin-right:50px">+ Add Student</a>
-        <input type="search" class="form-control" name="search" placeholder="Search..">
-        <span class="input-group-prepend">
-            <button type="submit" class="btn btn-primary"><i class="fa fa-search" style="font-size:18px"></i>
-            </button>
-        </span>
-    </div>
-</form>
-<br>
+    <div class="row">
 
-    @if (count(Auth::user()->staffprofile->classroom)>0)
+        <h4 style="text-align:center">Student List</h4>
+                <div class="col-md-6">
+                    <a href="/classroom/create" class="btn btn-primary" style="margin-right:50px">+ Add Student</a>
+                </div>
+        
+                <div class="col-md-6">
+                    <form action="/search-student" method="GET">
+                        <div class="input-group">
+                            <input type="search" class="form-control" name="search" placeholder="Search">
+                            <div class="input-group-btn">
+                              <button class="btn btn-primary" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                              </button>
+                            </div>
+                          </div>
+                    </form>
+                </div>
+                <br>
+                <br>
+
+
+                @if (count(Auth::user()->staffprofile->classroom)>0)
                         <table class="table table-striped">
                             
                             <tr>
@@ -94,5 +111,11 @@
 
 
 @endif
+
+            </div>
+        </div>
+        
+
+    
 </div>
 @endsection
