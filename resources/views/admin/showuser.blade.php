@@ -43,7 +43,7 @@
                 <p><b>Hobbies: </b>{{$user->studentprofile->hobbies ?? ''}}</p>
                 </div>
                 @else
-                <div class="panel-body">
+                <div class="panel-body" style="text-align:center">
                     @foreach ($classroom->performancerecord->where('year','=',now()->year) as $record)
                     @if (count($classroom->performancerecord)>1)
         
@@ -67,13 +67,13 @@
                     @endif
                    
                     @endforeach
-        
+    
                     <p><b>Date of Birth: </b>{{$user->studentprofile->DoB ?? ''}}</p>
                     <p><b>Gender: </b>{{$user->studentprofile->gender ?? ''}}</p>
                     <p><b>Father's name: </b>{{$user->studentprofile->father_name ?? ''}}</p>
-                    <p><b>Father's no: </b>{{$user->studentprofile->father_no ?? ''}}</p>
+                    <p><b>Father's #: </b>{{$user->studentprofile->father_no ?? ''}}</p>
                     <p><b>Mother's name: </b>{{$user->studentprofile->mother_name ?? ''}}</p>
-                    <p><b>Mother's no: </b>{{$user->studentprofile->mother_no ?? ''}}</p>
+                    <p><b>Mother's #: </b>{{$user->studentprofile->mother_no ?? ''}}</p>
                     <p><b>Residence: </b>{{$user->studentprofile->resident ?? ''}}</p>
                     <p><b>Club: </b>{{$user->studentprofile->club ?? ''}}</p>
                     <p><b>Hobbies: </b>{{$user->studentprofile->hobbies ?? ''}}</p>

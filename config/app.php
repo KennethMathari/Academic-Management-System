@@ -162,6 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        
 
         /*
          * Package Service Providers...
@@ -177,6 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Intervention\Image\ImageServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -231,6 +233,7 @@ return [
         'Image'=>Intervention\Image\Facades\Image::class,
         'Form'=>Collective\Html\FormFacade::class,
         'Html'=>Collective\Html\HtmlFacade::class,
+        'PDF'=> Barryvdh\DomPDF\Facade::class,
 
     ],
 

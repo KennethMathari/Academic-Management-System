@@ -8,7 +8,8 @@
     <div class="container">
         <div class="panel panel-default">
             <div class="panel-heading" style="text-align:center"><b>Add User</b></div>
-            <div class="panel-body"><form  action="{{url('users')}}" method="POST" enctype="multipart/form-data">
+            <div class="panel-body">
+                <form  action="{{url('users')}}" method="POST" enctype="multipart/form-data">
 
                 @csrf
                 <div class="form-group">
@@ -24,7 +25,7 @@
                 </div>
             
                 <div class="form-group">
-                    <label for="Adm_No">{{ __('Admission Number:') }}</label>
+                    <label for="Adm_No">{{ __('ID:') }}</label>
             
                         <input id="Adm_No" type="text" class="form-control @error('Adm_No') is-invalid @enderror" name="Adm_No" value="{{ old('Adm_No') }}" required autocomplete="name" autofocus>
             

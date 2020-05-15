@@ -3,7 +3,7 @@
 
     
 @section('content')
-<div class="container">
+<div class="container" style="padding-top:50px">
 
 @if (Auth::user()->user_type=='admin')
 
@@ -29,7 +29,7 @@
             <div class="col-md-6">
                 <form action="/search" method="GET">
                     <div class="input-group">
-                        <input type="search" class="form-control" name="search" placeholder="Search">
+                        <input type="search" class="form-control" name="search" placeholder="Search..">
                         <div class="input-group-btn">
                           <button class="btn btn-primary" type="submit">
                             <i class="glyphicon glyphicon-search"></i>
@@ -46,7 +46,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Role</th>
-                                    <th>Admission Number</th>
+                                    <th>ID</th>
                                     <th></th>
                                     <th></th>
                                 </tr>

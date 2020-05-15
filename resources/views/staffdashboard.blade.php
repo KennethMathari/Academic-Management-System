@@ -40,7 +40,7 @@
                 <div class="col-md-6">
                     <form action="/search-student" method="GET">
                         <div class="input-group">
-                            <input type="search" class="form-control" name="search" placeholder="Search">
+                            <input type="search" class="form-control" name="search" placeholder="Search student..">
                             <div class="input-group-btn">
                               <button class="btn btn-primary" type="submit">
                                 <i class="glyphicon glyphicon-search"></i>
@@ -58,18 +58,22 @@
                             
                             <tr>
                                 <th>Student Name</th>
-                                <th>Adm. No</th>
-                                <th>Class</th>
+                                <th>ID</th>
                                 <th></th>
                                 <th></th>
+                                <th>       
+                                    <a href="{{url('dynamic_pdf/pdf')}}" class="btn btn-warning" target="_blank"><i class="fa fa-print"></i> 
+                                        Print</a>
+                                </th>
+
                             </tr>
                             @foreach ($users as $user)
                             <tr>
                             <td><a href="/users/{{$user->student_id}}">{{$user->student_name}}</a></td>
                             <td>{{$user->student_id}}</td>
-                                <td>{{$user->class_name}}</td>
 
-                            <td><a href="classroom/{{$user->student_id}}/edit " class="btn btn-default">Edit</a></td>
+                            <td><a href="classroom/{{$user->student_id}}/edit " class="btn btn-default">
+                                Edit</a></td>
                                 <td>
                                     <script>
 
@@ -93,6 +97,7 @@
 
 
                                 </td>
+                                <td></td>
                             </tr>
                             @endforeach
                         </table>

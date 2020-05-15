@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container ">
-    <div class="panel panel-default">
+<div class="container " style="padding-top:70px">
+    <div class="panel panel-default" >
         <div class="panel-heading" style="text-align:center"><b>LOGIN</b></div>
         <div class="panel-body">
             <form method="POST" action="{{ route('login.custom') }}">
             @csrf
-            <p style="text-align:center"><i class='far fa-user-circle' style='font-size:150px;'></i></p>
+            <p style="text-align:center"><img src="/Images/2703062-512.png" width="200" height="200"></p>
 
             <div class="form-group">
                 <label for="email">{{ __('E-Mail Address:') }}</label>
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                     @error('email')
                         <span class="invalid-feedback" role="alert">
@@ -42,8 +42,8 @@
                 </div>
             
 
-            <div class="form-group">
-                    <button type="submit" class="btn btn-primary" style="width:100%;">
+            <div class="form-group" style="text-align:center">
+                    <button type="submit" class="btn btn-primary" style="width:70%;background-color:#0b6623;">
                         {{ __('Login') }}
                     </button>
 

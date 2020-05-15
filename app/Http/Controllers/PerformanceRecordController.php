@@ -79,6 +79,7 @@ class PerformanceRecordController extends Controller
         return view('student.showrecord')->with('record',$record);
     }
 
+
     public function destroy($id){
         $user=PerformanceRecord::find($id);
         $user->delete();

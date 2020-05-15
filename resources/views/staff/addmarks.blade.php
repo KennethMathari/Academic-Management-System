@@ -45,7 +45,7 @@
                 <div class="form-group">
                     <label for="english" >{{ __('English:') }}</label>
             
-                        <input id="english" type="text" class="form-control @error('english') is-invalid @enderror" name="english" value="" required autocomplete="english" autofocus >
+                        <input id="english" type="number" class="form-control @error('english') is-invalid @enderror" name="english" value="" required autocomplete="english" autofocus >
             
                         @error('english')
                             <span class="invalid-feedback" role="alert">
@@ -58,7 +58,7 @@
                 <div class="form-group">
                     <label for="kiswahili" >{{ __('Kiswahili:') }}</label>
             
-                        <input id="kiswahili" type="text" class="form-control @error('kiswahili') is-invalid @enderror" name="kiswahili" value="" required autocomplete="kiswahili" autofocus>
+                        <input id="kiswahili" type="number" class="form-control @error('kiswahili') is-invalid @enderror" name="kiswahili" value="" required autocomplete="kiswahili" autofocus>
             
                         @error('kiswahili')
                             <span class="invalid-feedback" role="alert">
@@ -70,7 +70,7 @@
                 <div class="form-group ">
                     <label for="mathematics" >{{ __('Mathematics:') }}</label>
             
-                        <input id="mathematics" type="text" class="form-control @error('mathematics') is-invalid @enderror" name="mathematics" value="" required autocomplete="mathematics" autofocus>
+                        <input id="mathematics" type="number" class="form-control @error('mathematics') is-invalid @enderror" name="mathematics" value="" required autocomplete="mathematics" autofocus>
             
                         @error('mathematics')
                             <span class="invalid-feedback" role="alert">
@@ -82,7 +82,7 @@
                 <div class="form-group">
                     <label for="science" >{{ __('Science:') }}</label>
             
-                        <input id="science" type="text" class="form-control @error('science') is-invalid @enderror" name="science" value="" required autocomplete="science" autofocus>
+                        <input id="science" type="number" class="form-control @error('science') is-invalid @enderror" name="science" value="" required autocomplete="science" autofocus>
             
                         @error('science')
                             <span class="invalid-feedback" role="alert">
@@ -94,7 +94,7 @@
                 <div class="form-group ">
                     <label for="social_studies" >{{ __('Social Studies:') }}</label>
             
-                        <input id="social_studies" type="text" class="form-control @error('social_studies') is-invalid @enderror" name="social_studies" value="" required autocomplete="social_studies" autofocus>
+                        <input id="social_studies" type="number" class="form-control @error('social_studies') is-invalid @enderror" name="social_studies" value="" required autocomplete="social_studies" autofocus>
             
                         @error('social_studies')
                             <span class="invalid-feedback" role="alert">
@@ -106,7 +106,7 @@
                 <div class="form-group">
                     <label for="religious_education" >{{ __('R.E :') }}</label>
             
-                        <input id="religious_education" type="text" class="form-control @error('religious_education') is-invalid @enderror" name="religious_education" value="" required autocomplete="religious_education" autofocus>
+                        <input id="religious_education" type="number" class="form-control @error('religious_education') is-invalid @enderror" name="religious_education" value="" required autocomplete="religious_education" autofocus>
             
                         @error('religious_education')
                             <span class="invalid-feedback" role="alert">
