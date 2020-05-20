@@ -30,6 +30,7 @@ class StudentProfileController extends Controller
     public function update(Request $request, $id){
         $this->validate($request,[
             'Adm_No'=>'string|max:255',
+            'class'=>'string|max:255',
             'DoB'=>'required|string|max:255',
             'father_name'=>'required|string|max:255',
             'father_no'=>'required|string|max:255',
@@ -46,6 +47,7 @@ class StudentProfileController extends Controller
         $user=User::findOrFail($id);
         $user->studentprofile->update([
             'DoB'=>$request->input('DoB'),
+            'class'=>$request->input('class'),
             'father_name'=>$request->input('father_name'),
             'father_no'=>$request->input('father_no'),
             'mother_name'=>$request->input('mother_name'),

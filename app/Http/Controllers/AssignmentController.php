@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Assignment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Traits\FileUpload;
+use DB;
+use Auth;
+
+
 
 class AssignmentController extends Controller
 {
-
-
 
     /**
      * Display a listing of the resource.
@@ -18,8 +21,14 @@ class AssignmentController extends Controller
      */
     public function index()
     {
-        $records=Assignment::orderBy('created_at','desc')->get();
-        return view('staff.assignments')->with('records',$records);
+        if (Auth::user()->user_type=='staff') {
+            $records=Assignment::orderBy('created_at','desc')->where('teacherid','=',Auth::user()->Adm_No)->paginate(10);
+        } elseif(Auth::user()->user_type=='student') {
+            $records=Assignment::orderBy('created_at','desc')->where('class','=',Auth::user()->studentprofile->class)->paginate(10);
+        }
+        
+        
+        return view('staff/assignment.assignments')->with('records',$records);
     }
 
     /**
@@ -29,7 +38,7 @@ class AssignmentController extends Controller
      */
     public function create()
     {
-        return view('staff.addassignment');
+        return view('staff.assignment.addassignment');
     }
 
     /**
@@ -63,10 +72,12 @@ class AssignmentController extends Controller
          $form->description= $request->input('description');
          $form->class= $request->input('class');
          $form->subject= $request->input('subject');
+         $form->duedate= $request->input('duedate');
+         $form->teacherid= $request->input('teacherid');
          $form->teacher= $request->input('teacher');
         $form->save();
 
-        return back()->with('success', 'Your images has been successfully');
+        return redirect('/assignment')->with('success', 'Assignment has been successfully uploaded.');
     }
 
     /**
@@ -75,9 +86,10 @@ class AssignmentController extends Controller
      * @param  \App\Assignment  $assignment
      * @return \Illuminate\Http\Response
      */
-    public function show(Assignment $assignment)
+    public function show($id)
     {
-        //
+        $assignment=Assignment::findOrFail($id);
+        return view('staff.assignment.showassignment')->with('assignment',$assignment);
     }
 
     /**
@@ -86,9 +98,10 @@ class AssignmentController extends Controller
      * @param  \App\Assignment  $assignment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Assignment $assignment)
+    public function edit($id)
     {
-        //
+        $assignment=Assignment::findOrFail($id);
+        return view('staff.assignment.editassignment')->with('assignment',$assignment);
     }
 
     /**
@@ -98,9 +111,30 @@ class AssignmentController extends Controller
      * @param  \App\Assignment  $assignment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Assignment $assignment)
+    public function update(Request $request, $id)
     {
-        //
+        if($request->hasfile('filename'))
+        {
+
+           foreach($request->file('filename') as $image)
+           {
+               $name=$image->getClientOriginalName();
+               $image->move(public_path().'/Assignments/', $name);  
+               $data[] = $name;  
+           }
+        }
+
+        //update assignment
+        $assignment=Assignment::find($id);
+        $assignment->title= $request->input('title');
+         $assignment->filename=json_encode($data);
+         $assignment->description= $request->input('description');
+         $assignment->class= $request->input('class');
+         $assignment->subject= $request->input('subject');
+         $assignment->duedate= $request->input('duedate');
+        $assignment->update();
+
+        return redirect('/assignment')->with('success','Assignment editted successfully!');
     }
 
     /**
@@ -109,8 +143,26 @@ class AssignmentController extends Controller
      * @param  \App\Assignment  $assignment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Assignment $assignment)
+    public function destroy($id)
     {
-        //
+        $assignment=Assignment::findOrFail($id);
+
+        if($assignment->filename !='noimage.jpg')
+         {
+            foreach(json_decode($assignment->filename)as $picture)
+            {
+                Storage::delete('/Assignments/'.$picture);
+            }
+         }
+
+        $assignment->delete();
+        return redirect('/assignment')->with('success','Assignment deleted successfully!');
+
+    }
+
+    public function search(Request $request){
+        $search=$request->get('search');
+        $records=DB::table('assignments')->where('title','like','%'.$search.'%')->where('teacherid','=',Auth::user()->Adm_No)->paginate(5);
+        return view('staff.assignment.assignments',['records'=>$records]);
     }
 }

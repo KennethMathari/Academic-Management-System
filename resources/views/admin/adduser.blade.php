@@ -15,7 +15,7 @@
                 <div class="form-group">
                     <label for="name" >{{ __('Name:') }}</label>
             
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" >
                         @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -27,7 +27,7 @@
                 <div class="form-group">
                     <label for="Adm_No">{{ __('ID:') }}</label>
             
-                        <input id="Adm_No" type="text" class="form-control @error('Adm_No') is-invalid @enderror" name="Adm_No" value="{{ old('Adm_No') }}" required autocomplete="name" autofocus>
+                        <input id="Adm_No" type="text" class="form-control @error('Adm_No') is-invalid @enderror" name="Adm_No" value="{{ old('Adm_No') }}" required autocomplete="name" >
             
                         @error('Adm_No')
                             <span class="invalid-feedback" role="alert">
@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <label for="user_type" >{{ __('User Type:') }}</label>
                         
-                        <select id="user_type" type="text" class="form-control @error('user_type') is-invalid @enderror" name="user_type" value="{{ old('user_type') }}" required autocomplete="name" autofocus>
+                        <select id="user_type" type="text" class="form-control @error('user_type') is-invalid @enderror" name="user_type" value="{{ old('user_type') }}" required autocomplete="name" >
                             <option value="" ></option>
                             <option value="student" >student</option>
                             <option value="staff">staff</option>

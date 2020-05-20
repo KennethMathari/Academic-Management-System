@@ -52,7 +52,7 @@ class UserController extends Controller
             'name'=>'required|string|max:255',
             'Adm_No'=>'required|string|max:255|unique:users',
             'user_type'=>'required|string|max:255',
-            'email'=>'required|string|email|max:255|unique:users|ends_with:@ams.com',
+            'email'=>'required|string|email|max:255|unique:users|ends_with:@cornerstoneacademy.co.ke',
             'user_image'=>'image|required|max:1999',
             'password'=>'required|string|min:8|confirmed'
         ]);

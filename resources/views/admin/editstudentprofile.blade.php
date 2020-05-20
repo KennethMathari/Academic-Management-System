@@ -11,11 +11,23 @@
                 <form method="POST" action="/studentprofile/{{$user->Adm_No}}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+
+                    <div class="form-group">
+                        <label for="class">{{ __('Class:') }}</label>
+                
+                            <input id="class" type="number"  class="form-control @error('class') is-invalid @enderror" name="class" value="{{ old('class') ?? $user->studentprofile->class}}" required autocomplete="class" placeholder="Enter class">
+                
+                            @error('class')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
                     
                     <div class="form-group">
                         <label for="DoB">{{ __('Date of Birth:') }}</label>
                 
-                            <input id="DoB" type="date"  class="form-control @error('DoB') is-invalid @enderror" name="DoB" value="{{ old('DoB') ?? $user->studentprofile->DoB}}" required autocomplete="DoB" autofocus>
+                            <input id="DoB" type="date"  class="form-control @error('DoB') is-invalid @enderror" name="DoB" value="{{ old('DoB') ?? $user->studentprofile->DoB}}" required autocomplete="DoB" >
                 
                             @error('DoB')
                                 <span class="invalid-feedback" role="alert">
@@ -29,7 +41,7 @@
                         <label for="father_name" >{{ __("Father's name:") }}</label>
                 
                         
-                            <input id="father_name" type="text" class="form-control @error('father_name') is-invalid @enderror" name="father_name" value="{{ old('father_name') ?? $user->studentprofile->father_name}}" required autocomplete="father_name" autofocus placeholder="Enter father's name">
+                            <input id="father_name" type="text" class="form-control @error('father_name') is-invalid @enderror" name="father_name" value="{{ old('father_name') ?? $user->studentprofile->father_name}}" required autocomplete="father_name"  placeholder="Enter father's name">
         
                             @error('father_name')
                                 <span class="invalid-feedback" role="alert">

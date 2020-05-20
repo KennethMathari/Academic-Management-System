@@ -51,6 +51,8 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/search','UserController@search');
     Route::get('/search-student','ClassRoomController@search');
     Route::get('/search-examrecords','PerformanceRecordController@search');
+    Route::get('/search-assignments','AssignmentController@search');
+
     Route::get('dynamic_pdf/pdf','DynamicPDFController@pdf');
 
 
