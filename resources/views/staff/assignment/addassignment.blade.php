@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 
     
 @section('content')
@@ -11,7 +11,7 @@
 
       <div class="form-group">
         <label for="title">{{ __('Title:') }}</label>
-            <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="" required autocomplete="title"  >
+            <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" required >
 
             @error('title')
                 <span class="invalid-feedback" role="alert">
@@ -21,27 +21,18 @@
         </div>
 
         <div class="form-group">
-          <label for="filename">{{ __('Filename:') }}</label>
-            <div class="input-group control-group increment"  id="filename">
-              <input  type="file" name="filename[]" class="form-control">
-              <div class="input-group-btn"> 
-                <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
-              </div>
+          <label for="filename" class="custom-file-upload">{{ __('Filename:') }}</label>
+              <input id="filename" type="file" name="filename" class=" @error('filename') is-invalid @enderror">
+              @error('filename')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
             </div>
-
-            <div class="clone hide">
-              <div class="control-group input-group" style="margin-top:10px">
-                <input type="file" name="filename[]" class="form-control">
-                <div class="input-group-btn"> 
-                  <button class="btn btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
-                </div>
-              </div>
-            </div>
-        </div>
 
             <div class="form-group">
                 <label for="description">{{ __('Description:') }}</label>
-                    <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="" required autocomplete="description"  >
+                <textarea rows="8" cols="50" id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required></textarea>
         
                     @error('description')
                         <span class="invalid-feedback" role="alert">
@@ -52,7 +43,7 @@
 
             <div class="form-group">
                 <label for="class">{{ __('Class:') }}</label>
-                    <input id="class" type="number" class="form-control @error('class') is-invalid @enderror" name="class" value="" required autocomplete="class"  >
+                    <input id="class" type="number" class="form-control @error('class') is-invalid @enderror" name="class" required  >
         
                     @error('class')
                         <span class="invalid-feedback" role="alert">
@@ -63,7 +54,7 @@
 
                 <div class="form-group">
                   <label for="subject">{{ __('Subject:') }}</label>
-                      <input id="subject" type="text" class="form-control @error('subject') is-invalid @enderror" name="subject" value="" required autocomplete="subject"  >
+                      <input id="subject" type="text" class="form-control @error('subject') is-invalid @enderror" name="subject" required >
           
                       @error('subject')
                           <span class="invalid-feedback" role="alert">
@@ -103,7 +94,7 @@
                         @enderror
                     </div>
     
-            <button type="submit" class="btn btn-primary" style="margin-top:10px">Submit</button>
+            <p style="text-align:center"><button type="submit" class="btn btn-primary" style="margin-top:10px;width:70%">Submit</button></p>
     
       </form>        
       </div>

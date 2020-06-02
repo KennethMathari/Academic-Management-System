@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 
     
 @section('content')
@@ -24,7 +24,7 @@
                     
                 </div>
             
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="Adm_No">{{ __('ID:') }}</label>
             
                         <input id="Adm_No" type="text" class="form-control @error('Adm_No') is-invalid @enderror" name="Adm_No" value="{{ old('Adm_No') }}" required autocomplete="name" >
@@ -34,7 +34,7 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
-                </div>
+                </div> --}}
             
                 <div class="form-group">
                     <label for="user_type" >{{ __('User Type:') }}</label>

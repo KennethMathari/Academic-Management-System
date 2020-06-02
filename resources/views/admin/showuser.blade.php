@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 
     
 @section('content')
@@ -179,9 +179,9 @@
                     <div class="panel-body">
                 <p><b>Phone Number: </b>{{$user->staffprofile->phone_number ?? 'N/A'}}</p>
                 <p><b>Class: </b>{{$user->staffprofile->class ?? 'N/A'}}</p>
+                <p><b>Bio: </b>{{$user->staffprofile->bio ?? 'N/A'}}</p>
                 <p><b>Subjects: </b>{{$user->staffprofile->subjects ?? 'N/A'}}</p>
                 <p><b>Skills: </b>{{$user->staffprofile->skills ?? 'N/A'}}</p>
-                <p><b>Date of Birth: </b>{{$user->staffprofile->DoB ?? 'N/A'}}</p>
                     </div>
                 </div>
                         

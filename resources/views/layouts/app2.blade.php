@@ -28,74 +28,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <style>
-.bgimg-1,
-.bgimg-2,
-.bgimg-3,
-.bgimg-4 {
-    position: relative;
-    /* opacity: 0.; */
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-.bgimg {
-    background-image: url("Images/20200514_125458.jpg");
-    min-height: 400%;
-}
-.bgimg-1 {
-    background-image: url("Images/meme.jpg");
-    min-height: 400%;
-}
-
-.bgimg-2 {
-    background-image: url("Images/desk.jpg");
-    min-height: 400px;
-}
-
-.bgimg-3 {
-    background-image: url("Images/bag.JPG");
-    min-height: 400px;
-}
-
-.bgimg-4 {
-    background-image: url("Images/book.JPG");
-    min-height: 400px;
-}
-
-.caption {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 100%;
-    text-align: center;
-    color: #000;
-}
-
-.caption span.border {
-    background-color: #111;
-    color: #fff;
-    padding: 18px;
-    font-size: 25px;
-    letter-spacing: 10px;
-}
-
-h3 {
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    font: 20px "Lato", sans-serif;
-    color: #111;
-}
-
-/* Turn off parallax scrolling for tablets and phones */
-@media only screen and (max-device-width: 1024px) {
-    .bgimg-1,
-    .bgimg-2,
-    .bgimg-3,
-    .bgimg-4 {
-        background-attachment: scroll;
-    }
-}
 
 .sidebar {
     margin: 0;
@@ -152,14 +84,6 @@ div.content {
     }
 }
 
-.field-icon {
-    float: right;
-    margin-left: -25px;
-    margin-top: -25px;
-    position: relative;
-    z-index: 2;
-}
-
 </style>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -167,8 +91,38 @@ div.content {
         
 
         <main class="py-4">
-            @include('inc.messages')
-            @yield('content')
+            <div class="sidebar">
+                @if (Auth::user()->user_type=='student')
+                <a  href="/studentdashboard">{{ __('Dashboard') }}</a>
+                <a href="/assignment">{{ __('Assignment') }}</a>
+                <a href="/performancerecords">{{ __('Exam') }}</a>
+
+
+                @elseif(Auth::user()->user_type=='staff')
+                <a href="/staffdashboard">{{ __('Dashboard') }}</a>
+                <a href="/assignment">{{ __('Assignment') }}</a>
+                <a href="/classroom">{{ __('Students') }}</a>
+                @else
+                <a href="/admindashboard">{{ __('Dashboard') }}</a>
+                <a href="/users">{{ __('Users') }}</a>
+                @endif    
+
+                <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                  document.getElementById('logout-form').submit();">
+                     {{ __('Logout') }}
+                 </a>
+                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+              
+              </div>
+              
+              <div class="content">
+                @include('inc.messages')
+                @yield('content')
+              </div>
+            
         </main>
     </div>
 </body>

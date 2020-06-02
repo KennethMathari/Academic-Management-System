@@ -1,4 +1,6 @@
 @extends('layouts.app')
+@include('inc.navbar')
+
 @section('content')
 <div class="bgimg-4" id="home">
     <div class="caption">
@@ -102,7 +104,7 @@
 
             @csrf
             <div class="form-group">        
-                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name"  placeholder="Enter Name">
+                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="true"  placeholder="Enter Name">
                     @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -112,7 +114,7 @@
             </div>
         
             <div class="form-group">        
-                    <input id="phonenumber" type="number" class="form-control @error('phonenumber') is-invalid @enderror" name="phonenumber" value="{{ old('phonenumber') }}" required autocomplete="phonenumber"  placeholder="Enter Phone number">
+                    <input id="phonenumber" type="number" class="form-control @error('phonenumber') is-invalid @enderror" name="phonenumber" value="{{ old('phonenumber') }}" required autocomplete="true"  placeholder="Enter Phone number">
         
                     @error('phonenumber')
                         <span class="invalid-feedback" role="alert">
@@ -122,7 +124,7 @@
             </div>
 
             <div class="form-group " >        
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Enter Email">
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="true" placeholder="Enter Email">
         
                     @error('email')
                         <span class="invalid-feedback" role="alert">
@@ -132,7 +134,7 @@
             </div>
 
             <div class="form-group">        
-                    <textarea rows="8" cols="50" id="message" type="text" class="form-control @error('message') is-invalid @enderror" name="message" value="{{ old('message') }}" required autocomplete="message"  placeholder="Enter Message"></textarea>
+                    <textarea rows="8" cols="50" id="message" type="text" class="form-control @error('message') is-invalid @enderror" name="message" value="{{ old('message') }}" required autocomplete="true"  placeholder="Enter Message"></textarea>
         
                     @error('message')
                         <span class="invalid-feedback" role="alert">

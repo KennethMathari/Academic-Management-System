@@ -1,8 +1,9 @@
 @extends('layouts.app')
-
 @section('content')
-<div class="container " style="padding-top:70px">
-    <div class="panel panel-default" >
+
+
+<div class="container" style="padding-top:20px">
+    <div class="row panel panel-default" >
         <div class="panel-heading" style="text-align:center"><b>LOGIN</b></div>
         <div class="panel-body">
             <form method="POST" action="{{ route('login.custom') }}">
@@ -11,7 +12,7 @@
 
             <div class="form-group">
                 <label for="email">{{ __('E-Mail Address:') }}</label>
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="true">
 
                     @error('email')
                         <span class="invalid-feedback" role="alert">
@@ -23,12 +24,23 @@
             <div class="form-group">
                 <label for="password">{{ __('Password:') }}</label>
                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
+                <span onclick="myFunction()" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                     @error('password')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
+
+                    <script>
+                        function myFunction() {
+                            var x = document.getElementById("password");
+                            if (x.type === "password") {
+                            x.type = "text";
+                            } else {
+                            x.type = "password";
+                            }
+                        }
+                    </script>
             </div>
 
             <div class="form-group d-flex">

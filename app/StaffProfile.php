@@ -10,7 +10,7 @@ class StaffProfile extends Model
     protected $primaryKey = "Adm_No";
 
     protected $fillable = [
-        'Adm_No','subjects', 'class','position','phone_number','DoB','skills'
+        'Adm_No','subjects', 'class','bio','position','phone_number','skills'
     ];
 
 

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 
     
 @section('content')
@@ -22,19 +22,6 @@
                             @enderror
                         
                     </div>
-                
-                    <div class="form-group ">
-                        <label for="Adm_No" >{{ __('Admission Number:') }}</label>
-                
-                       
-                            <input id="Adm_No" type="text" class="form-control @error('Adm_No') is-invalid @enderror" name="Adm_No" value="{{$user->Adm_No}}" required autocomplete="name" autofocus>
-                
-                            @error('Adm_No')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
                     
                 
                 

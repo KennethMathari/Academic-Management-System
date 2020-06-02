@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 
     
 @section('content')
@@ -12,7 +12,7 @@
 
   <div class="form-group">
     <label for="title">{{ __('Title:') }}</label>
-  <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{$assignment->title}}" required autocomplete="title"  >
+  <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{$assignment->title}}" required>
 
         @error('title')
             <span class="invalid-feedback" role="alert">
@@ -22,23 +22,14 @@
     </div>
 
     <div class="form-group">
-      <label for="filename">{{ __('Filename:') }}</label>
-        <div class="input-group control-group increment"  id="filename">
-        <input  type="file" name="filename[]" class="form-control" value="{{$assignment->filename}}">
-          <div class="input-group-btn"> 
-            <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
-          </div>
+      <label for="filename" class="custom-file-upload">{{ __('Filename:') }}</label>
+          <input id="filename" type="file" name="filename" class=" @error('filename') is-invalid @enderror" value="{{$assignment->filename}}">
+          @error('filename')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
         </div>
-
-        <div class="clone hide">
-          <div class="control-group input-group" style="margin-top:10px">
-            <input type="file" name="filename[]" class="form-control">
-            <div class="input-group-btn"> 
-              <button class="btn btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
-            </div>
-          </div>
-        </div>
-    </div>
 
         <div class="form-group">
             <label for="description">{{ __('Description:') }}</label>
@@ -75,7 +66,7 @@
 
               <div class="form-group">
                 <label for="duedate">{{ __('Due Date:') }}</label>
-              <input id="duedate" type="datetime-local" class="form-control @error('duedate') is-invalid @enderror" name="duedate" value="{{$assignment->duedate}}" required autocomplete="duedate" >
+              <input id="duedate" type="datetime-local" class="form-control @error('duedate') is-invalid @enderror" name="duedate" value="{{$assignment->duedate}}" required  >
         
                     @error('duedate')
                         <span class="invalid-feedback" role="alert">

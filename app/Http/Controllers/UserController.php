@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Carbon\Carbon;
 use App\User;
 use App\StudentProfile;
 use App\ClassRoom;
@@ -27,7 +29,18 @@ class UserController extends Controller
     {
 
         $users=User::orderBy('created_at','desc')->paginate(10);
-        return view('admindashboard')->with('users',$users);
+        return view('admin.users')->with('users',$users);
+        // return view('admindashboard');
+
+    }
+
+    public function admindashboard()
+    {
+
+        // $users=User::orderBy('created_at','desc')->paginate(10);
+        // return view('admin.users')->with('users',$users);
+        return view('admindashboard');
+
     }
 
     /**
@@ -50,7 +63,7 @@ class UserController extends Controller
     {
         $this->validate($request,[
             'name'=>'required|string|max:255',
-            'Adm_No'=>'required|string|max:255|unique:users',
+            // 'Adm_No'=>'required|string|max:255|unique:users',
             'user_type'=>'required|string|max:255',
             'email'=>'required|string|email|max:255|unique:users|ends_with:@cornerstoneacademy.co.ke',
             'user_image'=>'image|required|max:1999',
@@ -73,10 +86,14 @@ class UserController extends Controller
             $fileNameToStore='noimage.jpg';
         }
 
+        //Generate custom Adm_No
+        $config=['table'=>'users','field'=>'Adm_No','length'=>5,'prefix'=>22,'reset_on_prefix_change'=>true];
+        $Adm_No=IdGenerator::generate($config);
+
         //creates new user
         $user= new User;
         $user->name= $request->input('name');
-        $user->Adm_No= $request->input('Adm_No');
+        $user->Adm_No= $Adm_No;
         $user->user_type= $request->input('user_type');
         $user->email= $request->input('email');
         $user->user_image=$fileNameToStore;
@@ -88,7 +105,7 @@ class UserController extends Controller
             if (DB::table('student_profiles')->where('Adm_No', '!=', $user->Adm_No)->get()) {
                 //creates a new Adm_No in student_profiles table for every user created. 
                 $studentprofile=new StudentProfile;
-                $studentprofile->Adm_No= $request->input('Adm_No');
+                $studentprofile->Adm_No= $Adm_No;
                 $studentprofile->save();
             } else {
                 
@@ -97,19 +114,19 @@ class UserController extends Controller
         }elseif($user->user_type=='staff'){
         //creates a new Adm_No in staff_profiles table for every user created. 
         $staffprofile=new StaffProfile;
-        $staffprofile->Adm_No= $request->input('Adm_No');
+        $staffprofile->Adm_No= $Adm_No;
         $staffprofile->save();
 
         }
 
     
-        return redirect('/admindashboard')->with('success','User created successfully!');
+        return redirect('/users')->with('success','User created successfully!');
     }
 
     public function search(Request $request){
         $search=$request->get('search');
         $users=DB::table('users')->where('name','like','%'.$search.'%')->paginate(5);
-        return view('/admindashboard',['users'=>$users]);
+        return view('admin.users',['users'=>$users]);
     }
 
     /**
@@ -149,7 +166,6 @@ class UserController extends Controller
     {
         $this->validate($request,[
             'name'=>'required|string|max:255',
-            'Adm_No'=>'required|string|max:255',
             'email'=>'required|string|email|max:255',
             'user_image'=>'image|max:1999'
         ]);
@@ -171,7 +187,6 @@ class UserController extends Controller
         //update user
         $user=User::findOrFail($id);
         $user->name= $request->input('name');
-        $user->Adm_No= $request->input('Adm_No');
         $user->email= $request->input('email');
         if($request->hasFile('user_image')){
             $user->user_image=$fileNameToStore;
@@ -179,7 +194,7 @@ class UserController extends Controller
         $user->update();
 
 
-        return redirect('/admindashboard')->with('success','User editted successfully!');
+        return redirect('/users')->with('success','User editted successfully!');
     }
 
     /**
@@ -207,28 +222,7 @@ class UserController extends Controller
                         $user->staffprofile()->delete();
                     }
 
-            return redirect('/admindashboard')->with('success','User deleted successfully!');
+            return redirect('/users')->with('success','User deleted successfully!');
 }
 
-    public function update_user_image(Request $request){
-        // Handle file upload
-        if($request->hasFile('user_image')){
-            //Get filename with extension
-            $filenameWithExt=$request->file('user_image')->getClientOriginalName();
-            //Get just filename
-            $filename=pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just extension
-            $extension=$request->file('user_image')->getClientOriginalExtension();
-            //filename to store
-            $fileNameToStore=$filename.'_'.time().'.'.$extension;
-            //Upload image
-            $path=$request->file('user_image')->storeAs('public/user_images', $fileNameToStore);
-
-            $user=Auth::user();
-            $user->user_image=$fileNameToStore;
-            $user->save();
-        }
-
-        return view('admindashboard');
-    }
 }

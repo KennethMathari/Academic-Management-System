@@ -14,6 +14,11 @@ class PerformanceRecordController extends Controller
 {
     public function index(){
         $records=PerformanceRecord::orderBy('created_at','desc')->where('student_id','=',Auth::user()->Adm_No)->paginate(10);
+        return view('student.exams')->with('records',$records);
+    }
+
+    public function studentdashboard(){
+        $records=PerformanceRecord::orderBy('created_at','desc')->where('student_id','=',Auth::user()->Adm_No)->paginate(10);
         return view('studentdashboard')->with('records',$records);
     }
 
@@ -66,7 +71,7 @@ class PerformanceRecordController extends Controller
         if (Auth::user()->user_type=='student') {
             $search=$request->get('search');
             $records=DB::table('performance_records')->where('class_name','like','%'.$search.'%')->where('student_id','=',Auth::user()->Adm_No)->paginate(5);
-            return view('/studentdashboard',['records'=>$records]);
+            return view('student.exams',['records'=>$records]);
         } else {
             $search=$request->get('search');        
             $classroom=DB::table('performance_records')->where('class_name','like','%'.$search.'%')->paginate(5);
@@ -118,7 +123,7 @@ class PerformanceRecordController extends Controller
         $user->teacher_name= $request->input('teacher_name');
         $user->update();
 
-        if (Auth::user()->user_type=='staf') {
+        if (Auth::user()->user_type=='staff') {
             return redirect('/staffdashboard')->with('success','Exam record editted successfully!');
 
         } else {

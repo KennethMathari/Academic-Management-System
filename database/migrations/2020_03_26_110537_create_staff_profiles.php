@@ -19,9 +19,9 @@ class CreateStaffProfiles extends Migration
             $table->string('Adm_No');
             $table->string('subjects')->nullable();
             $table->string('class')->nullable();
+            $table->string('bio')->nullable();
             $table->string('position')->nullable();
             $table->string('phone_number')->nullable();
-            $table->string('DoB')->nullable();
             $table->string('skills')->nullable();
             $table->timestamps();
 

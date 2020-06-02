@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Assignment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Traits\FileUpload;
+use Carbon\Carbon;
 use DB;
 use Auth;
+use Illuminate\Support\Facades\File; 
+
 
 
 
@@ -51,24 +53,20 @@ class AssignmentController extends Controller
     {
         $this->validate($request, [
             'filename' => 'required',
-            'filename.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'filename.*' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx,zip|max:5000',
             'title'=>'required|string'
         ]);
 
-        if($request->hasfile('filename'))
-         {
+        if($request->hasfile('filename')){
+            $file=$request->file('filename');
+            $filename=time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('Assignments/'),$filename);
 
-            foreach($request->file('filename') as $image)
-            {
-                $name=$image->getClientOriginalName();
-                $image->move(public_path().'/Assignments/', $name);  
-                $data[] = $name;  
-            }
          }
 
          $form= new Assignment();
          $form->title= $request->input('title');
-         $form->filename=json_encode($data);
+         $form->filename=$filename;
          $form->description= $request->input('description');
          $form->class= $request->input('class');
          $form->subject= $request->input('subject');
@@ -90,6 +88,10 @@ class AssignmentController extends Controller
     {
         $assignment=Assignment::findOrFail($id);
         return view('staff.assignment.showassignment')->with('assignment',$assignment);
+        // return Carbon::now()->addHours($assignment->duedate)->diffForHumans(); 
+        // return  Carbon::parse($assignment->duedate)->diffForHumans();
+
+
     }
 
     /**
@@ -113,21 +115,18 @@ class AssignmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->hasfile('filename'))
-        {
+        $assignment=Assignment::find($id);
+        if($request->hasfile('filename')){
+            $file=$request->file('filename');
+            $filename=time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('Assignments/'),$filename);
+            $assignment->filename=$filename;
 
-           foreach($request->file('filename') as $image)
-           {
-               $name=$image->getClientOriginalName();
-               $image->move(public_path().'/Assignments/', $name);  
-               $data[] = $name;  
-           }
-        }
+         }
+        
 
         //update assignment
-        $assignment=Assignment::find($id);
         $assignment->title= $request->input('title');
-         $assignment->filename=json_encode($data);
          $assignment->description= $request->input('description');
          $assignment->class= $request->input('class');
          $assignment->subject= $request->input('subject');
@@ -149,10 +148,8 @@ class AssignmentController extends Controller
 
         if($assignment->filename !='noimage.jpg')
          {
-            foreach(json_decode($assignment->filename)as $picture)
-            {
-                Storage::delete('/Assignments/'.$picture);
-            }
+            $destinationPath = '/Assignments/';
+            File::delete(public_path().$destinationPath.$assignment->filename);
          }
 
         $assignment->delete();
@@ -164,5 +161,10 @@ class AssignmentController extends Controller
         $search=$request->get('search');
         $records=DB::table('assignments')->where('title','like','%'.$search.'%')->where('teacherid','=',Auth::user()->Adm_No)->paginate(5);
         return view('staff.assignment.assignments',['records'=>$records]);
+    }
+
+    public function download($file){
+        
+        return response()->download('Assignments/'.$file);
     }
 }

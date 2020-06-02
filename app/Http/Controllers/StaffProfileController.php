@@ -19,9 +19,9 @@ class StaffProfileController extends Controller
            
             'subjects'=>'required|string|max:255',
             'class'=>'required|string|max:255',
+            'bio'=>'required|string',
             'position'=>'required|string|max:255',
             'phone_number'=>'required|string|max:255',
-            'DoB'=>'required|string|max:255',
             'skills'=>'required|string|max:255'
         ]);
 
@@ -31,9 +31,9 @@ class StaffProfileController extends Controller
         $user->staffprofile->update([
             'subjects'=>$request->input('subjects'),
             'class'=>$request->input('class'),
+            'bio'=>$request->input('bio'),
             'position'=>$request->input('position'),
             'phone_number'=>$request->input('phone_number'),
-            'DoB'=>$request->input('DoB'),
             'skills'=>$request->input('skills')
         ]);
 

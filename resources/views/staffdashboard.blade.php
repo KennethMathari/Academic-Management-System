@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 
 @section('content')
 <div class="container ">
@@ -9,6 +9,7 @@
             <img src="/storage/user_images/{{Auth::user()->user_image}}" alt="{{Auth::user()->name}}" style="max-width:100%;height:300px">
             <h1>{{Auth::user()->name}}</h1>
             <p class="titlecard">{{Auth::user()->user_type}}</p>
+            <p >{{Auth::user()->Adm_No}}</p>
             <p>{{Auth::user()->email}}</p>
             <p><a href="/staffprofile/{{Auth::user()->Adm_No}}/edit"><button class="btncard">Edit Profile</button></a></p>
           </div>    
@@ -23,92 +24,14 @@
         <p><b>Class: </b>{{Auth::user()->staffprofile->class ?? ''}}</p>
         <p><b>Subjects: </b>{{Auth::user()->staffprofile->subjects ?? ''}}</p>
         <p><b>Skills: </b>{{Auth::user()->staffprofile->skills ?? ''}}</p>
-        <p><b>Date of Birth: </b>{{Auth::user()->staffprofile->DoB ?? ''}}</p>
+        <p><b>Bio: </b>{{Auth::user()->staffprofile->bio ?? ''}}</p>
             </div>
         </div>
         
     </div>
 </div>
 
-    <div class="row">
-
-        <h4 style="text-align:center">Student List</h4>
-                <div class="col-md-6">
-                    <a href="/classroom/create" class="btn btn-primary" style="margin-right:50px">+ Add Student</a>
-                </div>
-        
-                <div class="col-md-6">
-                    <form action="/search-student" method="GET">
-                        <div class="input-group">
-                            <input type="search" class="form-control" name="search" placeholder="Search student..">
-                            <div class="input-group-btn">
-                              <button class="btn btn-primary" type="submit">
-                                <i class="glyphicon glyphicon-search"></i>
-                              </button>
-                            </div>
-                          </div>
-                    </form>
-                </div>
-                <br>
-                <br>
-
-
-                @if (count(Auth::user()->staffprofile->classroom)>0)
-                        <table class="table table-striped">
-                            
-                            <tr>
-                                <th>Student Name</th>
-                                <th>ID</th>
-                                <th></th>
-                                <th></th>
-                                <th>       
-                                    <a href="{{url('dynamic_pdf/pdf')}}" class="btn btn-warning" target="_blank"><i class="fa fa-print"></i> 
-                                        Print</a>
-                                </th>
-
-                            </tr>
-                            @foreach ($users as $user)
-                            <tr>
-                            <td><a href="/users/{{$user->student_id}}">{{$user->student_name}}</a></td>
-                            <td>{{$user->student_id}}</td>
-
-                            <td><a href="classroom/{{$user->student_id}}/edit " class="btn btn-default">
-                                Edit</a></td>
-                                <td>
-                                    <script>
-
-                                        function ConfirmDelete()
-                                        {
-                                        var x = confirm("Are you sure you want to delete?");
-                                        if (x)
-                                          return true;
-                                        else
-                                          return false;
-                                        }
-                                      
-                                      </script>
-
-                    <form action="{{ route('classroom.destroy',$user->student_id) }}" method="POST" onsubmit='return ConfirmDelete()'>
-                        @csrf
-                        @method('DELETE')
-                        <!-- delete button -->
-                            <button type="submit" class="btn btn-danger float-right">Delete</button>
-                    </form>
-
-
-                                </td>
-                                <td></td>
-                            </tr>
-                            @endforeach
-                        </table>
-
-                        {{ $users->links() }}
-                     @else
-                        <p class="alert alert-warning">No students found!</p>
-                    @endif
-
-                </div>
-
+    
 
     
 @else()

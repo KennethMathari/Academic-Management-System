@@ -8,6 +8,8 @@ class StudentProfile extends Model
 {
     protected $guarded=[];
     protected $primaryKey = "id";
+    protected $dates = ['DoB'];
+
 
     public function user(){
         return $this->belongsTo('App\User','Adm_No','Adm_No');

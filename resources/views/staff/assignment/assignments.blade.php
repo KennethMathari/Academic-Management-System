@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 
     
 @section('content')
@@ -30,6 +30,7 @@
 
    <table class="table table-striped">
     <tr>
+        <th></th>
         <th>Title</th>
         <th>Class</th>
         <th>Subject</th>
@@ -38,8 +39,9 @@
         <th></th>
 
     </tr>
-        @foreach($records as $image)
+        @foreach($records as $key=>$image)
        <tr>
+       <td>{{++$key}}</td>
        <td><a href="/assignment/{{$image->id}}">{{$image->title}}</a></td>
            <td>{{$image->class}}</td>
            <td>{{$image->subject}}</td>
@@ -85,7 +87,7 @@
 @endif
 
   @elseif(Auth::user()->user_type=='student')
-      <p>Student assignment</p>
+      <h3 style="text-align: center">Assignments</h3>
       @if (count($records)>0)
 
    <table class="table table-striped">
