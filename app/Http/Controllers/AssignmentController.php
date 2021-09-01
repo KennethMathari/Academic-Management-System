@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Assignment;
+use App\Submission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
@@ -23,7 +24,7 @@ class AssignmentController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->user_type=='staff') {
+        if (Auth::user()->user_type=='staff' || Auth::user()->user_type=='admin') {
             $records=Assignment::orderBy('created_at','desc')->where('teacherid','=',Auth::user()->Adm_No)->paginate(10);
         } elseif(Auth::user()->user_type=='student') {
             $records=Assignment::orderBy('created_at','desc')->where('class','=',Auth::user()->studentprofile->class)->paginate(10);
@@ -53,7 +54,7 @@ class AssignmentController extends Controller
     {
         $this->validate($request, [
             'filename' => 'required',
-            'filename.*' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx,zip|max:5000',
+            'filename.*' => 'mimes:pdf,zip|max:5000',
             'title'=>'required|string'
         ]);
 
@@ -62,7 +63,17 @@ class AssignmentController extends Controller
             $filename=time().'.'.$file->getClientOriginalExtension();
             $file->move(public_path('Assignments/'),$filename);
 
-         }
+         } 
+
+         //use this when hosting in live server(optional).
+        //  if ($request->file('filename')->isValid()) {
+        //     $path = base_path();
+        //     $path = str_replace("AcademicSystem", "public_html", $path); // <= This one !
+        //     $destinationPath = $path . '/Assignments'; // upload path
+        //     $extension = $request->file('filename')->getClientOriginalExtension(); // getting image extension
+        //     $fileName = uniqid() . '.' . $extension; // renameing image
+        //     $request->file('filename')->move($destinationPath, $fileName); // uploading file to given path  
+        // }
 
          $form= new Assignment();
          $form->title= $request->input('title');
@@ -70,7 +81,7 @@ class AssignmentController extends Controller
          $form->description= $request->input('description');
          $form->class= $request->input('class');
          $form->subject= $request->input('subject');
-         $form->duedate= $request->input('duedate');
+         $form->duedate= Carbon::parse($request->input('duedate'));
          $form->teacherid= $request->input('teacherid');
          $form->teacher= $request->input('teacher');
         $form->save();
@@ -87,11 +98,9 @@ class AssignmentController extends Controller
     public function show($id)
     {
         $assignment=Assignment::findOrFail($id);
-        return view('staff.assignment.showassignment')->with('assignment',$assignment);
-        // return Carbon::now()->addHours($assignment->duedate)->diffForHumans(); 
-        // return  Carbon::parse($assignment->duedate)->diffForHumans();
-
-
+        $submissions=Submission::orderBy('created_at','desc')->where('assignment_id','=',$assignment->id)->where('student_id','=',Auth::user()->Adm_No)->get();
+        return view('staff.assignment.showassignment')->with('assignment',$assignment)->with('submissions',$submissions);
+        
     }
 
     /**
@@ -130,7 +139,7 @@ class AssignmentController extends Controller
          $assignment->description= $request->input('description');
          $assignment->class= $request->input('class');
          $assignment->subject= $request->input('subject');
-         $assignment->duedate= $request->input('duedate');
+         $assignment->duedate= Carbon::parse($request->input('duedate'));
         $assignment->update();
 
         return redirect('/assignment')->with('success','Assignment editted successfully!');

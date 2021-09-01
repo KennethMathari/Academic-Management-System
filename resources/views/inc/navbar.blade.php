@@ -1,5 +1,5 @@
 @if (Auth::guest())
-<nav class="navbar navbar-inverse navbar-fixed-top" id="navbar" style="background-color:#0b6623;margin:0px;">
+<nav class="navbar navbar-inverse" id="navbar" style="background-color:#0b6623;margin:0px;">
   <div class="container-fluid">
     <div class="navbar-header" style="color:#fff">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -98,9 +98,13 @@
                   @elseif(Auth::user()->user_type=='staff')
                   <li><a href="/staffdashboard">{{ __('Dashboard') }}</a></li>
                   <li><a href="/assignment">{{ __('Assignment') }}</a></li>
+                  <li><a href="/exam">{{ __('Exam') }}</a></li>
 
                   @else
                   <li><a href="/admindashboard">{{ __('Dashboard') }}</a></li>
+                  <li><a href="/assignment">{{ __('Assignment') }}</a></li>
+                  <li><a href="/exam">{{ __('Exam') }}</a></li>
+
                   @endif
                   
                   <li><a href="{{ route('logout') }}"

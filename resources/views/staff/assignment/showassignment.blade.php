@@ -21,9 +21,10 @@
     </div>
     <div class="row panel-body" style="text-align:center;margin:0px;">
 
-        <iframe src="{{ asset('/Assignments/'.$assignment->filename) }}" height="400" style=" width:100%" frameborder="0" class="col-xs-12" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        <embed src="{{ URL::asset('/Assignments/'.$assignment->filename) }}" type="application/pdf" height="400" style=" width:100%" frameborder="0" class="col-xs-12" />
 
-       <p>{{$assignment->description}}</p>
+
+       <p>{!!$assignment->description!!}</p>
 
     </div>
     <div class=" panel-footer">
@@ -31,19 +32,41 @@
         <div class="col-md-6 col-xs-6">
             <p><b>Posted on:</b>{{$assignment->created_at->format('d-m-Y')}}</p>
             <p><b>Teacher:</b>{{$assignment->teacher}}</p>
+            @foreach ($submissions as $submission)
+            {{-- <p><b>:</b>{{$submission->comment}}</p>  --}}
+            @endforeach         
+                       
+   
+
+
         </div>
         <div class="col-md-6 col-xs-6">
-            @if (Auth::user()->user_type=='staff')
+            {{-- @foreach ($submissions as $submission) --}}
+            @if ((Auth::user()->user_type=='staff') || (Auth::user()->user_type=='admin'))
             <p style="text-align: right"><a class="btn btn-default" href="/assignment/submission/{{$assignment->id}}">View Submissions</a></p>
+            
             @elseif(Auth::user()->user_type=='student')
                  @if (now()>$assignment->duedate)
-                     <p style="text-align: right;color:red"><b>Assignment is overdue!</b></p>
+
+                 @isset($submission->filename)
+                 <p style="text-align: right"><a class="btn btn-primary" href="/submission/{{$submission->id}}">View Submission</a></p>
                  @else
-            <p style="text-align: right"><a class="btn btn-primary" href="/assignment/submission/create/{{$assignment->id}}">Submit Assignment</a></p>
+                 <p style="text-align: right;color:red"><b>Pending Submission!</b></p>
+                 @endisset
+
+                 @else
+
+                 @isset($submission->filename)
+                 <p style="text-align: right"><a class="btn btn-primary" href="/submission/{{$submission->id}}">View Submission</a></p>
+                 @else
+                 <p style="text-align: right"><a class="btn btn-primary" href="/assignment/submission/create/{{$assignment->id}}">Submit Assignment</a></p>
+                 @endisset
 
                 @endif
 
             @endif
+            {{-- @endforeach          --}}
+
         </div>
         </div>
 

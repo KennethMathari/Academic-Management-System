@@ -63,7 +63,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function classroom(){
         return $this->hasMany('App\ClassRoom','student_id','Adm_No');
         return $this->hasMany('App\ClassRoom','teacher_id','Adm_No');
+    }
 
-
+    public function exams(){
+        return $this->hasMany('App\Exam','user_id','Adm_No');
     }
 }

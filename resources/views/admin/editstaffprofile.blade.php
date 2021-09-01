@@ -27,8 +27,21 @@
         
                     <div class="form-group ">
                         <label for="class" >{{ __("Class:") }}</label>
-                 
-                            <input id="class" type="text" class="form-control @error('class') is-invalid @enderror" name="class" value="{{ old('class') ?? $user->staffprofile->class}}" required >
+
+                            <select id="class" class="form-control @error('class') is-invalid @enderror" name="class" value="{{$user->staffprofile->class}}" required>
+                                <option value="{{$user->staffprofile->class}}" selected>{{$user->staffprofile->class}}</option>
+                                <option value="8">8</option>
+                                <option value="7">7</option>
+                                <option value="6">6</option>
+                                <option value="5">5</option>
+                                <option value="3">4</option>
+                                <option value="3">3</option>
+                                <option value="2">2</option>
+                                <option value="1">1</option>
+                                <option value="PP2">PP2</option>
+                                <option value="PP1">PP1</option>
+        
+                              </select>
         
                             @error('class')
                                 <span class="invalid-feedback" role="alert">
@@ -39,8 +52,6 @@
 
                         <div class="form-group">      
                             <label for="bio" >{{ __("Bio:") }}</label>
-                            {{-- <input  id="bio" type="text" class="form-control @error('bio') is-invalid @enderror" name="bio" value="{{ old('bio') ?? $user->staffprofile->bio}}" required  > --}}
-
                             <textarea rows="8" cols="50" id="bio" type="text" class="form-control @error('bio') is-invalid @enderror" name="bio" required   placeholder="Describe yourself.">{{ old('bio') ?? $user->staffprofile->bio }}</textarea>
                 
                             @error('bio')
@@ -65,7 +76,7 @@
                     <div class="form-group ">
                         <label for="phone_number" >{{ __("Phone number:") }}</label>
                 
-                            <input id="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') ?? $user->staffprofile->phone_number}}" required >
+                            <input id="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{$user->staffprofile->phone_number}}" required >
         
                             @error('phone_number')
                                 <span class="invalid-feedback" role="alert">

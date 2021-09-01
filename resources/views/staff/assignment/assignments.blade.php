@@ -4,7 +4,7 @@
 @section('content')
 <div class="container">
 
-  @if (Auth::user()->user_type=='staff')
+  @if (Auth::user()->user_type=='staff' || Auth::user()->user_type=='admin')
   <div class="row" style="padding-right:25px">
     <h3 style="text-align:center">Assignments</h3> 
     <div class="col-md-6" style="padding-bottom:5px;">       

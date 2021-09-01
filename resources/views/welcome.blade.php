@@ -1,16 +1,13 @@
 @extends('layouts.app')
-@include('inc.navbar')
+
 
 @section('content')
-<div class="bgimg-4" id="home">
-    <div class="caption">
-    <span class="border" style="background-color:transparent;font-size:25px;color: #0b6623;"><b>PRECIOUS CORNERSTONE ACADEMY.</b></span>
-    <p style="color:#fff;font-size:20px">A sure and solid foundation.</p>
-    </div>
-  </div>
+@include('inc.navbar')
+@include('inc.slideshow')
+
   
   <div style="color: #000;background-color:#F5F5F5;text-align:center;padding:30px 60px;">
-    <p style="font-size:20px">We provide the Kenyan curriculum education drawing from global best practice with a child centered approach. 
+    <p style="font-size:20px">We provide the Kenyan CBC based education drawing from global best practice with a child centered approach. 
         The school is committed to continue providing a warm and loving environment that is fun, loving, engaging and stimulating – a conductive environment that brings out the BEST in all our learners.</p>
         <div class="row">
             <h3 style="text-align:center;color:#0b6623;">OUR PROMISE</h3>
@@ -48,7 +45,7 @@
     </p>
     <div class="row" >
         <div class="col-md-4">
-            <p><img src="/Images/20200514_130412.jpg" width="350" height="300"></p>
+            <p><img src="/Images/f1befb6b-28e3-4aa7-90f0-1d7010299991.jpg" width="350" height="300"></p>
         </div>
         <div class="col-md-4">
             <p><img src="/Images/20200514_124759.jpg" width="350" height="300"></p>
@@ -100,7 +97,7 @@
     
     <h4 style="font-size:40px;color:#0b6623;text-align:center" >Have any questions? Let's get in touch!</h4>        
     <div class="container">
-        <form  action=" " method="POST" enctype="multipart/form-data">
+        <form  action="/contact" method="POST" enctype="multipart/form-data">
 
             @csrf
             <div class="form-group">        
@@ -114,7 +111,7 @@
             </div>
         
             <div class="form-group">        
-                    <input id="phonenumber" type="number" class="form-control @error('phonenumber') is-invalid @enderror" name="phonenumber" value="{{ old('phonenumber') }}" required autocomplete="true"  placeholder="Enter Phone number">
+                    <input id="phonenumber" type="tel" class="form-control @error('phonenumber') is-invalid @enderror" name="phonenumber" value="{{ old('phonenumber') }}" required autocomplete="true"  placeholder="Enter Phone number">
         
                     @error('phonenumber')
                         <span class="invalid-feedback" role="alert">
@@ -154,7 +151,7 @@
         <div  style="font-size:16px;background-color:#F5F5F5">
             <div class="container" >
                 <div class="col-md-4"><span class="glyphicon glyphicon-earphone"></span>  +254 716 804 712 | +254 722 346 964</div>
-                <div class="col-md-4"><span class="glyphicon glyphicon-envelope"></span>  info@cornerstoneacademy.com</div>
+                <div class="col-md-4"><span class="glyphicon glyphicon-envelope"></span>  info@cornerstoneacademy.co.ke</div>
                 <div class="col-md-4"><span class="glyphicon glyphicon-time"></span>  Mon-Sat 0800-1700</div>
                                                   
             </div>

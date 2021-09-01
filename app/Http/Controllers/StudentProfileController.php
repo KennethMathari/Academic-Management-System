@@ -28,21 +28,7 @@ class StudentProfileController extends Controller
     }
 
     public function update(Request $request, $id){
-        $this->validate($request,[
-            'Adm_No'=>'string|max:255',
-            'class'=>'string|max:255',
-            'DoB'=>'required|string|max:255',
-            'father_name'=>'required|string|max:255',
-            'father_no'=>'required|string|max:255',
-            'mother_name'=>'required|string|max:255',
-            'mother_no'=>'required|string|max:255',
-            'resident'=>'required|string|max:255',
-            'gender'=>'required|string|max:255',
-            'club'=>'required|string|max:255',
-            'hobbies'=>'required|string|max:255'
-        ]);
-
-
+        
         //update studentprofile
         $user=User::findOrFail($id);
         $user->studentprofile->update([

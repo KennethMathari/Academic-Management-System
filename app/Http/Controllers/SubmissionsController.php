@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Assignment;
 use App\Submission;
+use Auth;
 
 
 
@@ -43,9 +44,10 @@ class SubmissionsController extends Controller
     {
         $this->validate($request, [
             'filename' => 'required',
-            'filename.*' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx,zip|max:5000',
+            'filename.*' => 'mimes:pdf,zip|max:5000',
         ]);
 
+        //comment in live server(Optional).
         if($request->hasfile('filename')){
             $file=$request->file('filename');
             $filename=time().'.'.$file->getClientOriginalExtension();
@@ -53,13 +55,23 @@ class SubmissionsController extends Controller
 
          }
 
+         //uncomment in live server(Optional)
+        //  if ($request->file('filename')->isValid()) {
+        //     $path = base_path();
+        //     $path = str_replace("AcademicSystem", "public_html", $path); // <= This one !
+        //     $destinationPath = $path . '/Submissions'; // upload path
+        //     $extension = $request->file('filename')->getClientOriginalExtension(); // getting image extension
+        //     $filename = uniqid() . '.' . $extension; // renameing image
+        //     $request->file('filename')->move($destinationPath, $filename); // uploading file to given path
+        // }
+
          $form= new Submission();
          $form->assignment_id= $request->input('assignment_id');
          $form->filename=$filename;
          $form->comment= $request->input('comment');
          $form->student_id= $request->input('student_id');
          $form->student_name= $request->input('student_name');
-        $form->save();
+         $form->save();
 
         return redirect('/assignment')->with('success', 'Your assignment has been successfully submitted.');
     }
@@ -73,7 +85,8 @@ class SubmissionsController extends Controller
     public function show($id)
     {
         $submission=Submission::findOrFail($id);
-        return view('student.submissions.showsubmission')->with('submission',$submission);
+        $assignment=Assignment::orderBy('created_at','desc')->where('id','=',$submission->assignment_id)->get();
+        return view('student.submissions.showsubmission')->with('submission',$submission)->with('assignment',$assignment);
     }
 
     /**
@@ -84,7 +97,8 @@ class SubmissionsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $submission=Submission::findOrFail($id);
+        return view('student.submissions.editsubmission')->with('submission',$submission);
     }
 
     /**
@@ -96,7 +110,19 @@ class SubmissionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $submission=Submission::findOrFail($id);
+        if($request->hasfile('filename')){
+            $file=$request->file('filename');
+            $filename=time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('Submissions/'),$filename);
+         }
+        
+        //update submission
+        $submission->filename= $filename;
+        $submission->comment= $request->input('comment');
+        $submission->update();
+
+        return redirect('submission/'.$submission->id)->with('success','Submission editted successfully!');
     }
 
     public function remarks(Request $request,$id){

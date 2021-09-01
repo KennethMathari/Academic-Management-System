@@ -27,6 +27,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
+  <!-- Start WOWSlider.com HEAD section -->
+<link rel="stylesheet" type="text/css" href="engine1/style.css" />
+<script type="text/javascript" src="engine1/jquery.js"></script>
+<!-- End WOWSlider.com HEAD section -->
+
 <style>
 .bgimg-1,
 .bgimg-2,
@@ -54,12 +59,12 @@
 }
 
 .bgimg-3 {
-    background-image: url("Images/bag.JPG");
+    background-image: url("Images/bag.jpg");
     min-height: 400px;
 }
 
 .bgimg-4 {
-    background-image: url("Images/book.JPG");
+    background-image: url("Images/book.jpg");
     min-height: 400px;
 }
 

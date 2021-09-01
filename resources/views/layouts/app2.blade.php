@@ -87,24 +87,31 @@ div.content {
 </style>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
+    
     <div id="app">
         
 
         <main class="py-4">
             <div class="sidebar">
                 @if (Auth::user()->user_type=='student')
-                <a  href="/studentdashboard">{{ __('Dashboard') }}</a>
-                <a href="/assignment">{{ __('Assignment') }}</a>
-                <a href="/performancerecords">{{ __('Exam') }}</a>
+                <a  href="/studentdashboard" class="{{ (request()->is('studentdashboard')) ? 'active' : '' }}">{{ __('Dashboard') }}</a>
+                <a href="/assignment" class="{{ (request()->is('assignment*')) ? 'active' : '' }}">{{ __('Assignment') }}</a>
+                <a href="/exam" class="{{ (request()->is('exam*')) ? 'active' : '' }}">{{ __('Exam') }}</a>
 
 
                 @elseif(Auth::user()->user_type=='staff')
-                <a href="/staffdashboard">{{ __('Dashboard') }}</a>
-                <a href="/assignment">{{ __('Assignment') }}</a>
+                <a href="/staffdashboard" class="{{ (request()->is('staffdashboard')) ? 'active' : '' }}">{{ __('Dashboard') }}</a>
+                <a href="/assignment" class="{{ (request()->is('assignment*')) ? 'active' : '' }}">{{ __('Assignment') }}</a>
                 <a href="/classroom">{{ __('Students') }}</a>
+                <a href="/exam" class="{{ (request()->is('exam*')) ? 'active' : '' }}">{{ __('Exam') }}</a>
+
                 @else
-                <a href="/admindashboard">{{ __('Dashboard') }}</a>
-                <a href="/users">{{ __('Users') }}</a>
+                <a href="/admindashboard" class="{{ (request()->is('admindashboard')) ? 'active' : '' }}">{{ __('Dashboard') }}</a>
+                <a href="/users" class="{{ (request()->is('users*')) ? 'active' : '' }}">{{ __('Users') }}</a>
+                <a href="/assignment" class="{{ (request()->is('assignment*')) ? 'active' : '' }}">{{ __('Assignment') }}</a>
+                <a href="/exam" class="{{ (request()->is('exam*')) ? 'active' : '' }}">{{ __('Exam') }}</a>
+
+
                 @endif    
 
                 <a href="{{ route('logout') }}"
@@ -121,6 +128,11 @@ div.content {
               <div class="content">
                 @include('inc.messages')
                 @yield('content')
+                <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+    <script>
+      CKEDITOR.replace( 'article-ckeditor' );
+
+  </script>
               </div>
             
         </main>

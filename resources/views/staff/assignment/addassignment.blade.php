@@ -22,7 +22,7 @@
 
         <div class="form-group">
           <label for="filename" class="custom-file-upload">{{ __('Filename:') }}</label>
-              <input id="filename" type="file" name="filename" class=" @error('filename') is-invalid @enderror">
+              <input id="filename" type="file" accept="application/pdf" name="filename" class=" @error('filename') is-invalid @enderror">
               @error('filename')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -32,7 +32,7 @@
 
             <div class="form-group">
                 <label for="description">{{ __('Description:') }}</label>
-                <textarea rows="8" cols="50" id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required></textarea>
+                <textarea rows="8" cols="50" id='article-ckeditor' type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required></textarea>
         
                     @error('description')
                         <span class="invalid-feedback" role="alert">
@@ -43,9 +43,24 @@
 
             <div class="form-group">
                 <label for="class">{{ __('Class:') }}</label>
-                    <input id="class" type="number" class="form-control @error('class') is-invalid @enderror" name="class" required  >
-        
-                    @error('class')
+                    {{-- <input id="class" type="number" class="form-control @error('class') is-invalid @enderror" name="class" required  > --}}
+
+                    <select id="class" class="form-control @error('class') is-invalid @enderror" name="class" required>
+                        <option value=""></option>
+                        <option value="8">8</option>
+                        <option value="7">7</option>
+                        <option value="6">6</option>
+                        <option value="5">5</option>
+                        <option value="3">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                        <option value="PP2">PP2</option>
+                        <option value="PP1">PP1</option>
+
+                      </select>
+
+                      @error('class')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -65,7 +80,7 @@
 
                   <div class="form-group">
                     <label for="duedate">{{ __('Due Date:') }}</label>
-                  <input id="duedate" type="datetime-local" class="form-control @error('duedate') is-invalid @enderror" name="duedate" required autocomplete="duedate" >
+                  <input id="duedate" type="datetime-local" class="form-control @error('duedate') is-invalid @enderror" name="duedate" required >
             
                         @error('duedate')
                             <span class="invalid-feedback" role="alert">

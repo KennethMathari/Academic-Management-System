@@ -9,6 +9,6 @@ class Submission extends Model
     protected $guarded=[];
 
     public function assignment(){
-        return $this->belongsTo('App\Assignment','id');
+        return $this->belongsTo('App\Assignment','id','assignment_id');
     }
 }

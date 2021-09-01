@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\File; 
 use Carbon\Carbon;
 use App\User;
 use App\StudentProfile;
@@ -71,23 +72,26 @@ class UserController extends Controller
         ]);
 
         // Handle file upload
-        if($request->hasFile('user_image')){
-            //Get filename with extension
-            $filenameWithExt=$request->file('user_image')->getClientOriginalName();
-            //Get just filename
-            $filename=pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just extension
-            $extension=$request->file('user_image')->getClientOriginalExtension();
-            //filename to store
-            $fileNameToStore=$filename.'_'.time().'.'.$extension;
-            //Upload image
-            $path=$request->file('user_image')->storeAs('public/user_images', $fileNameToStore);
-        }else{
-            $fileNameToStore='noimage.jpg';
-        }
+        if($request->hasfile('user_image')){
+            $file=$request->file('user_image');
+            $filename=time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('UserImages/'),$filename);
+
+         }
+
+        //uncomment in live server
+        // if ($request->file('user_image')->isValid()) {
+        //     $path = base_path();
+        //     $path = str_replace("AcademicSystem", "public_html", $path); // <= This one !
+        //     $destinationPath = $path . '/UserImages'; // upload path
+        //     $extension = $request->file('user_image')->getClientOriginalExtension(); // getting image extension
+        //     $fileNameToStore = uniqid() . '.' . $extension; // renaming image
+        //     $request->file('user_image')->move($destinationPath, $fileNameToStore); // uploading file to given path
+            
+        // }
 
         //Generate custom Adm_No
-        $config=['table'=>'users','field'=>'Adm_No','length'=>5,'prefix'=>22,'reset_on_prefix_change'=>true];
+        $config=['table'=>'users','field'=>'Adm_No','length'=>4,'prefix'=>1,'reset_on_prefix_change'=>true];
         $Adm_No=IdGenerator::generate($config);
 
         //creates new user
@@ -96,7 +100,7 @@ class UserController extends Controller
         $user->Adm_No= $Adm_No;
         $user->user_type= $request->input('user_type');
         $user->email= $request->input('email');
-        $user->user_image=$fileNameToStore;
+        $user->user_image=$filename;
         $user->password= Hash::make($request->input('password'));
         $user->save();
 
@@ -171,25 +175,19 @@ class UserController extends Controller
         ]);
 
         // Handle file upload
-        if($request->hasFile('user_image')){
-            //Get filename with extension
-            $filenameWithExt=$request->file('user_image')->getClientOriginalName();
-            //Get just filename
-            $filename=pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just extension
-            $extension=$request->file('user_image')->getClientOriginalExtension();
-            //filename to store
-            $fileNameToStore=$filename.'_'.time().'.'.$extension;
-            //Upload image
-            $path=$request->file('user_image')->storeAs('public/user_images', $fileNameToStore);
-        }
+        if($request->hasfile('user_image')){
+            $file=$request->file('user_image');
+            $filename=time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('UserImages/'),$filename);
+
+         }
 
         //update user
         $user=User::findOrFail($id);
         $user->name= $request->input('name');
         $user->email= $request->input('email');
         if($request->hasFile('user_image')){
-            $user->user_image=$fileNameToStore;
+            $user->user_image=$filename;
         }
         $user->update();
 
@@ -209,7 +207,8 @@ class UserController extends Controller
        
         if($user->user_image !='noimage.jpg'){
             // Delete image
-            Storage::delete('public/user_images'.$user->user_image);
+            $destinationPath = '/storage/user_images/';
+            File::delete(public_path().$destinationPath.$user->user_image);
         }
         $user->delete();
 
@@ -217,7 +216,7 @@ class UserController extends Controller
 
                         $user->studentprofile()->delete();
                     }
-            elseif($user->user_type=='staff'){
+                elseif($user->user_type=='staff'){
                         
                         $user->staffprofile()->delete();
                     }

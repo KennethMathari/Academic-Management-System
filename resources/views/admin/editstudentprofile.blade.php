@@ -15,7 +15,20 @@
                     <div class="form-group">
                         <label for="class">{{ __('Class:') }}</label>
                 
-                            <input id="class" type="number"  class="form-control @error('class') is-invalid @enderror" name="class" value="{{ $user->studentprofile->class}}" required  placeholder="Enter class">
+                            <select id="class" class="form-control @error('class') is-invalid @enderror" name="class" value="{{ $user->studentprofile->class}}" required placeholder="Enter class">
+                                <option value="{{ $user->studentprofile->class}}" selected>{{ $user->studentprofile->class}}</option>
+                                <option value="8">8</option>
+                                <option value="7">7</option>
+                                <option value="6">6</option>
+                                <option value="5">5</option>
+                                <option value="3">4</option>
+                                <option value="3">3</option>
+                                <option value="2">2</option>
+                                <option value="1">1</option>
+                                <option value="PP2">PP2</option>
+                                <option value="PP1">PP1</option>
+        
+                              </select>
                 
                             @error('class')
                                 <span class="invalid-feedback" role="alert">
@@ -27,7 +40,7 @@
                     <div class="form-group">
                         <label for="DoB">{{ __('Date of Birth:') }}</label>
                 
-                            <input id="DoB" type="date"  class="form-control @error('DoB') is-invalid @enderror" name="DoB" value="{{ old('DoB') ?? $user->studentprofile->DoB}}" required >
+                            <input id="DoB" type="date"  class="form-control @error('DoB') is-invalid @enderror" name="DoB" value="{{$user->studentprofile->DoB}}" required>
                 
                             @error('DoB')
                                 <span class="invalid-feedback" role="alert">
@@ -40,9 +53,7 @@
                             <div class="col-md-6 col-xs-6">
                                 <div class="form-group ">
                                     <label for="father_name" >{{ __("Father's name:") }}</label>
-                            
-                                    
-                                        <input id="father_name" type="text" class="form-control @error('father_name') is-invalid @enderror" name="father_name" value="{{ old('father_name') ?? $user->studentprofile->father_name}}"  placeholder="Enter father's name">
+                                    <input id="father_name" type="text" class="form-control @error('father_name') is-invalid @enderror" name="father_name" value="{{ old('father_name') ?? $user->studentprofile->father_name}}"  placeholder="Enter father's name">
                     
                                         @error('father_name')
                                             <span class="invalid-feedback" role="alert">
@@ -110,7 +121,7 @@
                     <div class="form-group">
                         <label for="gender" >{{ __("Gender:") }}</label>
                 
-                            <input id="gender" type="text" class="form-control @error('gender') is-invalid @enderror" name="gender" value="{{ old('gender') ?? $user->studentprofile->gender}}" required  placeholder="Enter gender">
+                            <input id="gender" type="text" class="form-control @error('gender') is-invalid @enderror" name="gender" value="{{ old('gender') ?? $user->studentprofile->gender}}"  placeholder="Enter gender">
         
                             @error('gender')
                                 <span class="invalid-feedback" role="alert">

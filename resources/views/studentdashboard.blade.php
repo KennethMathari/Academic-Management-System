@@ -32,7 +32,7 @@
                 @endif
                 
                 @endforeach
-                        <p><b>Date of Birth: </b>{{Auth::user()->studentprofile->DoB->format('d-m-Y') ?? ''}}</p>
+                        <p><b>Date of Birth: </b>{{ Carbon\Carbon::parse(Auth::user()->studentprofile->DoB)->format('d-m-Y') ?? '' }}</p>
                         <p><b>Gender: </b>{{Auth::user()->studentprofile->gender ?? ''}}</p>
                         <p><b>Father's name: </b>{{Auth::user()->studentprofile->father_name ?? ''}}</p>
                         <p><b>Father's no: </b>{{Auth::user()->studentprofile->father_no ?? ''}}</p>

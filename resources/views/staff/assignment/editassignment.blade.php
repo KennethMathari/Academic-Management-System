@@ -22,7 +22,7 @@
     </div>
 
     <div class="form-group">
-      <label for="filename" class="custom-file-upload">{{ __('Filename:') }}</label>
+      <label for="filename" class="custom-file-upload">{{ __('File:') }}</label>
           <input id="filename" type="file" name="filename" class=" @error('filename') is-invalid @enderror" value="{{$assignment->filename}}">
           @error('filename')
             <span class="invalid-feedback" role="alert">
@@ -33,7 +33,9 @@
 
         <div class="form-group">
             <label for="description">{{ __('Description:') }}</label>
-                <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{$assignment->description}}" required autocomplete="description"  >
+                {{-- <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{$assignment->description}}" required autocomplete="description"  > --}}
+                <textarea rows="8" cols="50" id='article-ckeditor' type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required>{!!$assignment->description!!}</textarea>
+
     
                 @error('description')
                     <span class="invalid-feedback" role="alert">

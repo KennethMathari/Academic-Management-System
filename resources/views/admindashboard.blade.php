@@ -8,7 +8,7 @@
             
             <div class="row">
                     <div class="card" >
-                        <img src="/storage/user_images/{{Auth::user()->user_image}}" alt="{{Auth::user()->name}}" style="max-width:100%;height:300px">
+                        <img  src="{{ url('storage/user_images/'.Auth::user()->user_image) }}" alt="{{Auth::user()->name}}" style="max-width:100%;height:300px">
                         <h1>{{Auth::user()->name}}</h1>
                         <p class="titlecard">{{Auth::user()->user_type}}</p>
                         <p>{{Auth::user()->email}}</p>

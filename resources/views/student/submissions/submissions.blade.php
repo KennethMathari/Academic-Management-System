@@ -10,7 +10,6 @@
 
         <table class="table table-striped">
          <tr>
-             <th></th>
              <th>File</th>
              <th>Student</th>
              <th>Time</th>
@@ -19,7 +18,6 @@
          </tr>
              @foreach($submissions as $key=>$submission)
             <tr>
-            <td>{{++$key}}</td>
             <td><a href="/submission/{{$submission->id}}">{{$submission->filename}}</a></td>
                 <td>{{$submission->student_name}}</td>
                 <td>{{$submission->created_at->diffForHumans()}}</td>

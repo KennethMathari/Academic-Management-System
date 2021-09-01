@@ -21,7 +21,7 @@
 
         <div class="form-group">
           <label for="filename" class="custom-file-upload">{{ __('Filename:') }}</label>
-              <input id="filename" type="file" name="filename" class=" @error('filename') is-invalid @enderror" required>
+              <input id="filename" type="file" accept="application/pdf" name="filename" class=" @error('filename') is-invalid @enderror" required>
               @error('filename')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

@@ -75,7 +75,7 @@ class PerformanceRecordController extends Controller
         } else {
             $search=$request->get('search');        
             $classroom=DB::table('performance_records')->where('class_name','like','%'.$search.'%')->paginate(5);
-            return view('admin.showuser',['classroom'=>$classroom]);
+            return redirect()->back()->with('classroom',$classroom);
         }
     }
 

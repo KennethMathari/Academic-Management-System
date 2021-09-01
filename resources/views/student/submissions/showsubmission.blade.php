@@ -22,7 +22,8 @@
     <div class="row panel-body" style="margin:0px;">
         <p>{{$submission->comment}}</p>
 
-        <iframe src="{{ asset('/Submissions/'.$submission->filename) }}" height="400" style=" width:100%" frameborder="0" class="col-xs-12" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        <embed src="{{ asset('/Submissions/'.$submission->filename) }}" type="application/pdf" height="400" style=" width:100%" frameborder="0" class="col-xs-12" />
+
         
         <p style="margin:10px;text-align:right"><b>Submitted by:</b>{{$submission->student_name}}</p>
 
@@ -30,16 +31,36 @@
     <div class=" panel-footer">
         <div class="row">
         <div class="col-md-6 col-xs-6">
-            <p ><label>Teacher remarks:</label>{{ $submission->teacher_remarks ?? 'Pending...'}}</p>
+            <p ><label>Teacher remarks:</label>{!! $submission->teacher_remarks ?? 'Pending...'!!}</p>
+        <p>
+            
+      </p>
         </div>
         <div class="col-md-6 col-xs-6">
-            @if (empty($submission->teacher_remarks))
-            <p style="text-align: right"><a class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Remarks</a></p>
- 
-            @else
-            <p style="text-align: right"><a class="btn btn-primary" data-toggle="modal" data-target="#myModal">Edit Remarks</a></p>
+          @if (Auth::user()->user_type=='staff' || Auth::user()->user_type=='admin')
 
-            @endif
+          @if (empty($submission->teacher_remarks))
+          <p style="text-align: right"><a class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Remarks</a></p>
+
+          @else
+          <p style="text-align: right"><a class="btn btn-primary" data-toggle="modal" data-target="#myModal">Edit Remarks</a></p>
+
+          @endif 
+
+          @else
+          @foreach ($assignment as $assign)
+
+              @if (now()>$assign->duedate)
+                  
+              @else
+              <p style="text-align: right"><a class="btn btn-primary" href="{{$submission->id}}/edit ">Edit submission</a></p>
+
+              @endif
+              @endforeach
+
+
+          @endif
+           
 
             <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
@@ -57,13 +78,8 @@
                       @method('PUT')
                         <div class="form-group">
                             <label for="teacher_remarks">{{ __('Remarks:') }}</label>
-                            <textarea rows="8" cols="50" id="teacher_remarks" type="text" class="form-control @error('teacher_remarks') is-invalid @enderror" name="teacher_remarks" placeholder="Enter remarks" required>{{$submission->teacher_remarks}}</textarea>
+                            <textarea rows="8" cols="50"  type="text" class="form-control" id='article-ckeditor' name="teacher_remarks" placeholder="Enter remarks" required>{!!$submission->teacher_remarks!!}</textarea>
                     
-                                @error('teacher_remarks')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
 
                             <div class="form-group ">
@@ -71,6 +87,7 @@
                                   {{ __('Submit') }}
                               </button></p>
                     </form>
+                    
                     
                   </div>
         </div>
